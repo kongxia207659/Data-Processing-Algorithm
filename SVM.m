@@ -1,4 +1,3 @@
-
 clc,clear
 a=load('cancerdata2.txt');
 a(:,1)=[];  %删除第一列病例号
