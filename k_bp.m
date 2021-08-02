@@ -51,37 +51,37 @@ for k=1:5
    ValidateTrain=normTrainOutput-train_t;%ValidateTrain为规整数据与训练数据差值
    ValidateTrain=sum(abs(ValidateTrain));%对ValidateTrain取绝对值再相加
    n=max(size(ValidateTrain));%n为ValidateTrain矩阵的长度
-for i=1:n %遍历ValidateTrain若有0值则正确训练数加1
-    if ValidateTrain(i)==0
-        countTrain=countTrain+1;
+    for i=1:n %遍历ValidateTrain若有0值则正确训练数加1
+        if ValidateTrain(i)==0
+            countTrain=countTrain+1;
+        end
     end
-end
-accuracyTrain=countTrain/n;
-disp('训练总数：');
-disp(n);
-disp('训练样本中正确的总数:');
-display(countTrain);
-disp('正确率:');
-display(accuracyTrain);
-averageAccuracyTrain=accuracyTrain+averageAccuracyTrain;
-[normTestOutput] = sim(net,test_p);
-normTestOutput=round(normTestOutput);
-ValidateTest=normTestOutput-test_t;
-ValidateTest=sum(abs(ValidateTest));
-n=max(size(ValidateTest));
-for i=1:n
-    if ValidateTest(i)==0
-        countTest=countTest+1;
+    accuracyTrain=countTrain/n;
+    disp('训练总数：');
+    disp(n);
+    disp('训练样本中正确的总数:');
+    display(countTrain);
+    disp('正确率:');
+    display(accuracyTrain);
+    averageAccuracyTrain=accuracyTrain+averageAccuracyTrain;
+    [normTestOutput] = sim(net,test_p);
+    normTestOutput=round(normTestOutput);
+    ValidateTest=normTestOutput-test_t;
+    ValidateTest=sum(abs(ValidateTest));
+    n=max(size(ValidateTest));
+    for i=1:n
+        if ValidateTest(i)==0
+            countTest=countTest+1;
+        end
     end
-end
-accuracyTest=countTest/n;
-disp('测试总数：');
-disp(n);
-disp('测试样本中正确的总数:');
-display(countTest);
-disp('正确率:');
-display(accuracyTest);
-averageAccuracyTest=accuracyTest+averageAccuracyTest;
+    accuracyTest=countTest/n;
+    disp('测试总数：');
+    disp(n);
+    disp('测试样本中正确的总数:');
+    display(countTest);
+    disp('正确率:');
+    display(accuracyTest);
+    averageAccuracyTest=accuracyTest+averageAccuracyTest;
 end
 disp('训练样本平均准确率')
 averageAccuracyTrain=averageAccuracyTrain/5;
