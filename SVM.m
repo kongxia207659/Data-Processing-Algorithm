@@ -1,24 +1,24 @@
-%Ô­Ê¼Êı¾İcancerdata.txt¿ÉÔÚÍøÉÏÏÂÔØ£¬Êı¾İÖĞµÄBÌæ»»³É1£¬MÌæ»»³É-1£¬XÌæ»»³É2£¬É¾³ıÁË·Ö¸î·û*,Ìæ»»ºóµÄÊı¾İÃüÃû³Écancerdata2.txt
+
 clc,clear
 a=load('cancerdata2.txt');
-a(:,1)=[];  %É¾³ıµÚÒ»ÁĞ²¡ÀıºÅ
-gind=find(a(:,1)==1);  %¶Á³öÁ¼ĞÔÖ×ÁöµÄĞòºÅ
-bind=find(a(:,1)==-1); %¶Á³ö¶ñĞÔÖ×ÁöµÄĞòºÅ
-training0=a([1:500],[2:end]); %Ìá³öÒÑÖªÑù±¾µãµÄÊı¾İ
+a(:,1)=[];  %åˆ é™¤ç¬¬ä¸€åˆ—ç—…ä¾‹å·
+gind=find(a(:,1)==1);  %è¯»å‡ºè‰¯æ€§è‚¿ç˜¤çš„åºå·
+bind=find(a(:,1)==-1); %è¯»å‡ºæ¶æ€§è‚¿ç˜¤çš„åºå·
+training0=a([1:500],[2:end]); %æå‡ºå·²çŸ¥æ ·æœ¬ç‚¹çš„æ•°æ®
 training=training0'; 
-[train,ps]=mapstd(training); %ÒÑ·ÖÀàÊı¾İ±ê×¼»¯
-group(gind)=1; group(bind)=-1;  %ÒÑÖªÑù±¾µãµÄÀà±ğ±êºÅ
-group=group'; %×ª»»³ÉÁĞÏòÁ¿
-xa0=a([501:569],[2:end]); %Ìá³ö´ı·ÖÀàÊı¾İ
-xa=xa0'; xa=mapstd('apply',xa,ps); %´ı·ÖÀàÊı¾İ±ê×¼»¯
-s=svmtrain(training',group, 'Method','SMO', 'Kernel_Function','quadratic') %Ê¹ÓÃĞòÁĞ×îĞ¡»¯·½·¨ÑµÁ·Ö§³ÖÏòÁ¿»úµÄ·ÖÀàÆ÷£¬Èç¹ûÊ¹ÓÃ¶ş´Î¹æ»®µÄ·½·¨ÑµÁ·Ö§³ÖÏòÁ¿»úÔòÎŞ·¨Çó½â
-sv_index=s.SupportVectorIndices'  %·µ»ØÖ§³ÖÏòÁ¿µÄ±êºÅ
-beta=s.Alpha'  %·µ»Ø·ÖÀàº¯ÊıµÄÈ¨ÏµÊı
-b=s.Bias  %·µ»Ø·ÖÀàº¯ÊıµÄ³£ÊıÏî
-mean_and_std_trans=s.ScaleData %µÚ1ĞĞ·µ»ØµÄÊÇÒÑÖªÑù±¾µã¾ùÖµÏòÁ¿µÄÏà·´Êı£¬µÚ2ĞĞ·µ»ØµÄÊÇ±ê×¼²îÏòÁ¿µÄµ¹Êı
-check=svmclassify(s,training');  %ÑéÖ¤ÒÑÖªÑù±¾µã
-err_rate=1-sum(group==check)/length(group) %¼ÆËã´íÅĞÂÊ
-solution=svmclassify(s,xa'); %½øĞĞ´ıÅĞÑù±¾µã·ÖÀà
+[train,ps]=mapstd(training); %å·²åˆ†ç±»æ•°æ®æ ‡å‡†åŒ–
+group(gind)=1; group(bind)=-1;  %å·²çŸ¥æ ·æœ¬ç‚¹çš„ç±»åˆ«æ ‡å·
+group=group'; %è½¬æ¢æˆåˆ—å‘é‡
+xa0=a([501:569],[2:end]); %æå‡ºå¾…åˆ†ç±»æ•°æ®
+xa=xa0'; xa=mapstd('apply',xa,ps); %å¾…åˆ†ç±»æ•°æ®æ ‡å‡†åŒ–
+s=svmtrain(training',group, 'Method','SMO', 'Kernel_Function','quadratic') %ä½¿ç”¨åºåˆ—æœ€å°åŒ–æ–¹æ³•è®­ç»ƒæ”¯æŒå‘é‡æœºçš„åˆ†ç±»å™¨ï¼Œå¦‚æœä½¿ç”¨äºŒæ¬¡è§„åˆ’çš„æ–¹æ³•è®­ç»ƒæ”¯æŒå‘é‡æœºåˆ™æ— æ³•æ±‚è§£
+sv_index=s.SupportVectorIndices'  %è¿”å›æ”¯æŒå‘é‡çš„æ ‡å·
+beta=s.Alpha'  %è¿”å›åˆ†ç±»å‡½æ•°çš„æƒç³»æ•°
+b=s.Bias  %è¿”å›åˆ†ç±»å‡½æ•°çš„å¸¸æ•°é¡¹
+mean_and_std_trans=s.ScaleData %ç¬¬1è¡Œè¿”å›çš„æ˜¯å·²çŸ¥æ ·æœ¬ç‚¹å‡å€¼å‘é‡çš„ç›¸åæ•°ï¼Œç¬¬2è¡Œè¿”å›çš„æ˜¯æ ‡å‡†å·®å‘é‡çš„å€’æ•°
+check=svmclassify(s,training');  %éªŒè¯å·²çŸ¥æ ·æœ¬ç‚¹
+err_rate=1-sum(group==check)/length(group) %è®¡ç®—é”™åˆ¤ç‡
+solution=svmclassify(s,xa'); %è¿›è¡Œå¾…åˆ¤æ ·æœ¬ç‚¹åˆ†ç±»
 solution=solution' 
-sg=find(solution==1)  %Çó´ıÅĞÑù±¾µãÖĞµÄÁ¼ĞÔ±àºÅ
-sb=find(solution==-1) %Çó´ıÅĞÑù±¾µãÖĞµÄ¶ñĞÔ±àºÅ
+sg=find(solution==1)  %æ±‚å¾…åˆ¤æ ·æœ¬ç‚¹ä¸­çš„è‰¯æ€§ç¼–å·
+sb=find(solution==-1) %æ±‚å¾…åˆ¤æ ·æœ¬ç‚¹ä¸­çš„æ¶æ€§ç¼–å·
