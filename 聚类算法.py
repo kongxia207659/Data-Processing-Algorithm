@@ -32,10 +32,8 @@ def classify(dataSet, centroids, k):
     newCentroids = pd.DataFrame(dataSet).groupby(
         minDistIndices).mean()  # DataFramte(dataSet)对DataSet分组，groupby(min)按照min进行统计分类，mean()对分类结果求均值
     newCentroids = newCentroids.values
-
     # 计算变化量
     changed = newCentroids - centroids
-
     return changed, newCentroids
 
 
@@ -43,12 +41,10 @@ def classify(dataSet, centroids, k):
 def kmeans(dataSet, k):  #dataset是需要输入的数据
     # 随机取质心
     centroids = random.sample(dataSet, k)
-
     # 更新质心 直到变化量全为0
     changed, newCentroids = classify(dataSet, centroids, k)
     while np.any(changed != 0):
         changed, newCentroids = classify(dataSet, newCentroids, k)
-
     centroids = sorted(newCentroids.tolist())  # tolist()将矩阵转换成列表 sorted()排序
 
     # 根据质心计算每个集群
@@ -59,24 +55,18 @@ def kmeans(dataSet, k):  #dataset是需要输入的数据
         cluster.append([])
     for i, j in enumerate(minDistIndices):  # enymerate()可同时遍历索引和遍历元素
         cluster[j].append(dataSet[i])
-
     return centroids, cluster   #返回质心和对应的集群
-
-
 
 
 def readExcelDataByName(fileName, sheetName):
     data = xlrd.open_workbook(r'C:\Users\32374\Desktop\MIM_matlab\火点经纬度.xlsx')
     x_data = []
     y_data = []
-
     data = xlrd.open_workbook(r'文件存储位置+文件名')
     table = data.sheets()[0]
     x_data = list(range(5301))
-
     cap = table.col_values(2)
     # print(cap)  #打印出来检验是否正确读取
-
     for i in range(1, 5302):
         y_data.append(cap[i])
     return y_data
@@ -84,10 +74,6 @@ def readExcelDataByName(fileName, sheetName):
 
 if __name__ == '__main__':
     #输入dataset和k
-
-
-
-
     table = xlrd.open_workbook('C:/Users/32374/Desktop/MIM_matlab/火点经纬度.xlsx').sheets()[0]  # 获取第一个sheet表
     row = table.nrows  # 行数
     col = table.ncols  # 列数
@@ -96,7 +82,6 @@ if __name__ == '__main__':
         cols = np.matrix(table.col_values(i))  # 把list转换为矩阵进行矩阵操作
         datamatrix[:, i] = cols  # 按列把数据存进矩阵中
     dataset = datamatrix.tolist()
-
     k=10
     centroids, cluster = kmeans(dataset, k)
     print('质心为：%s' % centroids)
